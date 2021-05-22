@@ -5,7 +5,7 @@ import time
 from tictactoe import TicTacToe
 
 pygame.init()
-size = width, height = 600, 400
+size = width, height = 400, 600
 
 # Colors
 black = (0, 0, 0)
@@ -15,15 +15,15 @@ screen = pygame.display.set_mode(size)
 bg_image = pygame.image.load("./assets/img/bg_image.jpg")
 bg_image = pygame.transform.scale(bg_image, size)
 
-mediumFont = pygame.font.Font("./assets/font/OpenSans-Regular.ttf", 28)
-largeFont = pygame.font.Font("./assets/font/OpenSans-Regular.ttf", 40)
-moveFont = pygame.font.Font("./assets/font/OpenSans-Regular.ttf", 60)
+mediumFont = pygame.font.Font("./assets/font/catskin.otf", 35)
+smallFont = pygame.font.Font("./assets/font/catskin.otf", 25)
+largeFont = pygame.font.Font("./assets/font/catskin.otf", 80)
+llargeFont = pygame.font.Font("./assets/font/catskin.otf", 55)
+moveFont = pygame.font.Font("./assets/font/catskin.otf", 60)
 
 user = None
 game_board = TicTacToe()
 ai_turn = False
-
-
 
 while True:
     for event in pygame.event.get():
@@ -35,26 +35,43 @@ while True:
     # Player memilih
     if user is None:
         # Title
-        title = largeFont.render("Tic Tac Toe", True, white)
+        title = largeFont.render("Tic-Tac-Toe", True, white)
         titleRect = title.get_rect()
-        titleRect.center = ((width / 2), 50)
+        titleRect.center = ((width/ 2), 180)
         screen.blit(title, titleRect)
 
         # Button X
-        playXButton = pygame.Rect((width / 8), (height / 2), width / 4, 50)
-        playX = mediumFont.render("Pemain X", True, black)
+        playXButton = pygame.Rect(5*(width / 8), (height / 2), width / 2.5, 50)
+        playX = mediumFont.render("Play as X", True, black)
         playXRect = playX.get_rect()
+        playXButton.center=((width / 2), 300)
         playXRect.center = playXButton.center
-        pygame.draw.rect(screen, white, playXButton)
+        pygame.draw.rect(screen, white, playXButton,border_top_right_radius=20,
+        border_bottom_right_radius=20,border_bottom_left_radius=20,
+        border_top_left_radius=20)
         screen.blit(playX, playXRect)
 
         # Button O
-        playOButton = pygame.Rect(5 * (width / 8), (height / 2), width / 4, 50)
-        playO = mediumFont.render("Pemain O", True, black)
+        playOButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
+        playO = mediumFont.render("Play as O", True, black)
         playORect = playO.get_rect()
+        playOButton.center=((width / 2), 370)
         playORect.center = playOButton.center
-        pygame.draw.rect(screen, white, playOButton)
+        pygame.draw.rect(screen, white, playOButton,border_top_right_radius=20,
+        border_bottom_right_radius=20,border_bottom_left_radius=20,
+        border_top_left_radius=20)
         screen.blit(playO, playORect)
+
+        #Exit Button
+        exitButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
+        exit = mediumFont.render("Exit", True, black)
+        exitRect = exit.get_rect()
+        exitButton.center=((width / 2), 440)
+        exitRect.center = exitButton.center
+        pygame.draw.rect(screen, white, exitButton,border_top_right_radius=20,
+        border_bottom_right_radius=20,border_bottom_left_radius=20,
+        border_top_left_radius=20)
+        screen.blit(exit, exitRect)
 
         # Cek jika button diklik
         click, _, _ = pygame.mouse.get_pressed()
@@ -66,12 +83,15 @@ while True:
             elif playOButton.collidepoint(mouse):
                 time.sleep(0.2)
                 user = TicTacToe.O
-
+            elif exitButton.collidepoint(mouse):
+                time.sleep(0.2)
+                pygame.Quit()
+    # tictactoe board
     else:
         # Game board
         tile_size = 80
         tile_origin = (width / 2 - (1.5 * tile_size),
-                       height / 2 - (1.5 * tile_size))
+                       height / 3 - (1.5 * tile_size))
         tiles = []
         for i in range(3):
             row = []
@@ -97,17 +117,27 @@ while True:
         if game_over:
             winner = game_board.winner(game_board.state)
             if winner is None:
-                title = f"Game Over: Seri."
+                title = f"Game Over : Seri"
             else:
-                title = f"Game Over: {winner} menang."
+                title = f"Game Over : You Win!"
         elif user == player:
-            title = f"Bermain sebagai {user}"
+            title = f" Current player: {user} "
+            turn = mediumFont.render("Your Turn", True, white)
+            titlesRect = turn.get_rect()
+            titlesRect.center = ((width / 2), 420)
+            screen.blit(turn, titlesRect)  
         else:
-            title = f"AI berpikir..."
-        title = largeFont.render(title, True, white)
+            title = f" Current player:{player} "
+            turn = mediumFont.render("Wait for Your Turn", True, white)
+            titlesRect = turn.get_rect()
+            titlesRect.center = ((width / 2), 420)
+            screen.blit(turn, titlesRect)        
+        
+        title = mediumFont.render(title, True, white)
         titleRect = title.get_rect()
-        titleRect.center = ((width / 2), 30)
+        titleRect.center = ((width / 2), 380)
         screen.blit(title, titleRect)
+        
 
         # Cek pergerakkan AI
         if user != player and not game_over:
@@ -129,11 +159,15 @@ while True:
                         game_board.state = game_board.result(game_board.state, (i, j))
 
         if game_over:
-            againButton = pygame.Rect(width / 3, height - 65, width / 3, 50)
-            again = mediumFont.render("Play Again", True, black)
+            #play again
+            againButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
+            again = smallFont.render("Play Again", True, black)
             againRect = again.get_rect()
+            againButton.center=((width / 2), 480)
             againRect.center = againButton.center
-            pygame.draw.rect(screen, white, againButton)
+            pygame.draw.rect(screen, white, againButton,border_top_right_radius=20,
+             border_bottom_right_radius=20,border_bottom_left_radius=20,
+            border_top_left_radius=20)
             screen.blit(again, againRect)
             click, _, _ = pygame.mouse.get_pressed()
             if click == 1:
@@ -143,12 +177,32 @@ while True:
                     user = None
                     game_board.clear()
                     ai_turn = False
+            #exit 
+            exitButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
+            exit = smallFont.render("Exit", True, black)
+            exitRect = exit.get_rect()
+            exitButton.center=((width / 2), 540)
+            exitRect.center = exitButton.center
+            pygame.draw.rect(screen, white, exitButton,border_top_right_radius=20,
+            border_bottom_right_radius=20,border_bottom_left_radius=20,
+            border_top_left_radius=20)
+            screen.blit(exit, exitRect)
+            click, _, _ = pygame.mouse.get_pressed()
+            if click == 1:
+                mouse = pygame.mouse.get_pos()
+                if exitButton.collidepoint(mouse):
+                    time.sleep(0.2)
+                    pygame.Quit()
+                    
         else:
-            againButton = pygame.Rect(width / 3, height - 65, width / 3, 50)
-            again = mediumFont.render("Kembali", True, black)
+            againButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
+            again = smallFont.render("Back to Menu", True, black)
             againRect = again.get_rect()
+            againButton.center=((width / 2), 520)
             againRect.center = againButton.center
-            pygame.draw.rect(screen, white, againButton)
+            pygame.draw.rect(screen, white, againButton,border_top_right_radius=20,
+             border_bottom_right_radius=20,border_bottom_left_radius=20,
+            border_top_left_radius=20)
             screen.blit(again, againRect)
             click, _, _ = pygame.mouse.get_pressed()
             if click == 1:
@@ -158,5 +212,6 @@ while True:
                     user = None
                     game_board.clear()
                     ai_turn = False
-
+        
+           
     pygame.display.flip()
