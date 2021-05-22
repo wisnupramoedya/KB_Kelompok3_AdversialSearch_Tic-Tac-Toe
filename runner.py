@@ -113,7 +113,7 @@ while True:
         if user != player and not game_over:
             if ai_turn:
                 time.sleep(0.5)
-                move = game_board.minimax()
+                move = game_board.alpha_beta_search()
                 game_board.state = game_board.result(game_board.state, move)
                 ai_turn = False
             else:

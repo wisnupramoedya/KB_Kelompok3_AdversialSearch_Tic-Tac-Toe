@@ -5,6 +5,8 @@ class TicTacToe():
     X = "X"
     O = "O"
     EMPTY = None
+    INF_MIN = float("-inf")
+    INF_MAX = float("inf")
 
     def __init__(self):
         super().__init__()
@@ -102,7 +104,7 @@ class TicTacToe():
             else:
                 return 0
     
-    def minimax(self):
+    def alpha_beta_search(self):
         """
         Mengembalikan action optimal untuk player sekarang
         """
@@ -110,32 +112,40 @@ class TicTacToe():
             return None
         else:
             if self.player(self.state) == self.X:
-                value, move = self.max_value(self.state)
+                value, move = self.max_value(self.state, self.INF_MIN, self.INF_MAX)
                 return move
             else:
-                value, move = self.min_value(self.state)
+                value, move = self.min_value(self.state, self.INF_MIN, self.INF_MAX)
                 return move
     
-    def max_value(self, board):
+    def max_value(self, board, alpha, beta):
         if self.terminal(board):
             return self.utility(board), None
         
-        v = float('-inf')
+        v = self.INF_MIN
         move = None
         for action in self.actions(board):
-            v2, action2 = self.min_value(self.result(board, action))
+            v2, action2 = self.min_value(self.result(board, action), alpha, beta)
             if v2 > v:
                 v, move = v2, action
+                alpha = max(alpha, v)
+            
+            if v >= beta:
+                return v, move
         return v, move
 
-    def min_value(self, board):
+    def min_value(self, board, alpha, beta):
         if self.terminal(board):
             return self.utility(board), None
         
-        v = float('inf')
+        v = self.INF_MAX
         move = None
         for action in self.actions(board):
-            v2, action2 = self.max_value(self.result(board, action))
+            v2, action2 = self.max_value(self.result(board, action), alpha, beta)
             if v2 < v:
                 v, move = v2, action
+                beta = min(beta, v)
+            
+            if v <= alpha:
+                return v, move
         return v, move
