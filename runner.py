@@ -12,6 +12,8 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 screen = pygame.display.set_mode(size)
+bg_image = pygame.image.load("./assets/img/bg_image.jpg")
+bg_image = pygame.transform.scale(bg_image, size)
 
 mediumFont = pygame.font.Font("./assets/font/OpenSans-Regular.ttf", 28)
 largeFont = pygame.font.Font("./assets/font/OpenSans-Regular.ttf", 40)
@@ -26,12 +28,12 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
 
-    screen.fill(black)
+    screen.blit(bg_image, bg_image.get_rect())
 
     # Player memilih
     if user is None:
         # Title
-        title = largeFont.render("Tic-Tac-Toe", True, white)
+        title = largeFont.render("Tic Tac Toe", True, white)
         titleRect = title.get_rect()
         titleRect.center = ((width / 2), 50)
         screen.blit(title, titleRect)
