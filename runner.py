@@ -23,6 +23,8 @@ user = None
 game_board = TicTacToe()
 ai_turn = False
 
+
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -139,7 +141,22 @@ while True:
                 if againButton.collidepoint(mouse):
                     time.sleep(0.2)
                     user = None
-                    game_board = TicTacToe()
+                    game_board.clear()
+                    ai_turn = False
+        else:
+            againButton = pygame.Rect(width / 3, height - 65, width / 3, 50)
+            again = mediumFont.render("Kembali", True, black)
+            againRect = again.get_rect()
+            againRect.center = againButton.center
+            pygame.draw.rect(screen, white, againButton)
+            screen.blit(again, againRect)
+            click, _, _ = pygame.mouse.get_pressed()
+            if click == 1:
+                mouse = pygame.mouse.get_pos()
+                if againButton.collidepoint(mouse):
+                    time.sleep(0.2)
+                    user = None
+                    game_board.clear()
                     ai_turn = False
 
     pygame.display.flip()

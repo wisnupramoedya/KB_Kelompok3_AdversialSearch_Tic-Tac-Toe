@@ -12,6 +12,11 @@ class TicTacToe():
             [None, None, None],
             [None, None, None]]
     
+    def clear(self):
+        self.state = [[None, None, None],
+            [None, None, None],
+            [None, None, None]]
+
     def player(self, board):
         """
         Mengembalikan player selanjutnya dalam board
