@@ -12,14 +12,17 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 screen = pygame.display.set_mode(size)
-bg_image = pygame.image.load("./assets/img/bg_image.jpg")
+
+bg_file = "./assets/img/bg_image.jpg"
+bg_image = pygame.image.load(bg_file)
 bg_image = pygame.transform.scale(bg_image, size)
 
-mediumFont = pygame.font.Font("./assets/font/catskin.otf", 35)
-smallFont = pygame.font.Font("./assets/font/catskin.otf", 25)
-largeFont = pygame.font.Font("./assets/font/catskin.otf", 80)
-llargeFont = pygame.font.Font("./assets/font/catskin.otf", 55)
-moveFont = pygame.font.Font("./assets/font/catskin.otf", 60)
+font_file = "./assets/font/Catskin.otf"
+mediumFont = pygame.font.Font(font_file, 35)
+smallFont = pygame.font.Font(font_file, 25)
+largeFont = pygame.font.Font(font_file, 80)
+llargeFont = pygame.font.Font(font_file, 55)
+moveFont = pygame.font.Font(font_file, 60)
 
 user = None
 game_board = TicTacToe()
