@@ -12,6 +12,12 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption("Tic Tac Toe vs AI")
+
+logo_file = "./assets/img/logo.png"
+logo_image = pygame.image.load(logo_file)
+logo_image = pygame.transform.scale(logo_image, (32, 32))
+pygame.display.set_icon(logo_image)
 
 bg_file = "./assets/img/bg_image.jpg"
 bg_image = pygame.image.load(bg_file)
