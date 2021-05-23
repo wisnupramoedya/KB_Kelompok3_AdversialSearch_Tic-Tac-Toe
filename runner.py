@@ -202,7 +202,7 @@ while True:
                 mouse = pygame.mouse.get_pos()
                 if exitButton.collidepoint(mouse):
                     time.sleep(0.2)
-                    pygame.Quit()
+                    pygame.quit()
                     
         else:
             againButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
