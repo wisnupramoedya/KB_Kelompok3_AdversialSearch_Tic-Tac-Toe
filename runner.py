@@ -12,6 +12,12 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption("Tic Tac Toe vs AI")
+
+logo_file = "./assets/img/logo.png"
+logo_image = pygame.image.load(logo_file)
+logo_image = pygame.transform.scale(logo_image, (32, 32))
+pygame.display.set_icon(logo_image)
 
 bg_file = "./assets/img/bg_image.jpg"
 bg_image = pygame.image.load(bg_file)
@@ -122,7 +128,8 @@ while True:
             if winner is None:
                 title = f"Game Over : Seri"
             else:
-                title = f"Game Over : You Win!"
+                player_winner = "AI" if not ai_turn else "You"
+                title = f"Game Over : {player_winner} Win!"
         elif user == player:
             title = f" Current player: {user} "
             turn = mediumFont.render("Your Turn", True, white)
