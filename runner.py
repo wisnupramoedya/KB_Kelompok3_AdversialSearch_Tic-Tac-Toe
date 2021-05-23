@@ -122,7 +122,8 @@ while True:
             if winner is None:
                 title = f"Game Over : Seri"
             else:
-                title = f"Game Over : You Win!"
+                player_winner = "AI" if not ai_turn else "You"
+                title = f"Game Over : {player_winner} Win!"
         elif user == player:
             title = f" Current player: {user} "
             turn = mediumFont.render("Your Turn", True, white)
