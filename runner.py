@@ -88,7 +88,7 @@ while True:
                 user = TicTacToe.O
             elif exitButton.collidepoint(mouse):
                 time.sleep(0.2)
-                pygame.Quit()
+                pygame.quit()
     # tictactoe board
     else:
         # Game board
@@ -130,7 +130,7 @@ while True:
             titlesRect.center = ((width / 2), 420)
             screen.blit(turn, titlesRect)  
         else:
-            title = f" Current player:{player} "
+            title = f" Current player: {player} "
             turn = mediumFont.render("Wait for Your Turn", True, white)
             titlesRect = turn.get_rect()
             titlesRect.center = ((width / 2), 420)
@@ -215,6 +215,6 @@ while True:
                     user = None
                     game_board.clear()
                     ai_turn = False
-        
-           
+    
     pygame.display.flip()
+

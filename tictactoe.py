@@ -15,6 +15,9 @@ class TicTacToe():
             [None, None, None]]
     
     def clear(self):
+        """
+        Membersihkan semua state pada kelas Tic Tac Toe
+        """
         self.state = [[None, None, None],
             [None, None, None],
             [None, None, None]]
@@ -23,7 +26,6 @@ class TicTacToe():
         """
         Mengembalikan player selanjutnya dalam board
         """
-
         xCounter = 0
         oCounter = 0
 
@@ -60,21 +62,23 @@ class TicTacToe():
         """
         Mengembalikan pemenang, jika ada
         """
-        # Check rows
+        # Cek baris
         if all(i == board[0][0] for i in board[0]):
             return board[0][0]
         elif all(i == board[1][0] for i in board[1]):
             return board[1][0]
         elif all(i == board[2][0] for i in board[2]):
             return board[2][0]
-        # Check columns
+        
+        # Cek kolom
         elif board[0][0] == board[1][0] and board[1][0] == board[2][0]:
             return board[0][0]
         elif board[0][1] == board[1][1] and board[1][1] == board[2][1]:
             return board[0][1]
         elif board[0][2] == board[1][2] and board[1][2] == board[2][2]:
             return board[0][2]
-        # Check diagonals
+        
+        # Cek diagonal
         elif board[0][0] == board[1][1] and board[1][1] == board[2][2]:
             return board[0][0]
         elif board[0][2] == board[1][1] and board[1][1] == board[2][0]:
@@ -86,7 +90,9 @@ class TicTacToe():
         """
         Mengembalikan True jika game selesai, False jika tidak
         """
-        if self.winner(board) is not None or (not any(self.EMPTY in sublist for sublist in board) and self.winner(board) is None):
+        # jika sudah ada winner atau dalam board sudah kosong saat winner belum ditemukan
+        winner_side = self.winner(board)
+        if winner_side is not None or (not any(self.EMPTY in sublist for sublist in board) and winner_side is None):
             return True
         else:
             return False
@@ -97,6 +103,7 @@ class TicTacToe():
         """
         if self.terminal(board):
             winner_side = self.winner(board)
+            # Cek winner apakah X, O, atau seri
             if winner_side == self.X:
                 return 1
             elif winner_side == self.O:
@@ -108,23 +115,31 @@ class TicTacToe():
         """
         Mengembalikan action optimal untuk player sekarang
         """
+        # Cek apakah sudah terminal
         if self.terminal(self.state):
             return None
         else:
+            # Jika AI sekarang giliran X
             if self.player(self.state) == self.X:
                 value, move = self.max_value(self.state, self.INF_MIN, self.INF_MAX)
                 return move
+            # Jika AI sekarang giliran O
             else:
                 value, move = self.min_value(self.state, self.INF_MIN, self.INF_MAX)
                 return move
     
     def max_value(self, board, alpha, beta):
+        """
+        Melakukan perhitungan saat giliran di posisi max untuk AI
+        """
+        # Cek apakah sudah terminal
         if self.terminal(board):
             return self.utility(board), None
         
         v = self.INF_MIN
         move = None
         for action in self.actions(board):
+            # Mengecek value kemenangan v dan langkah selanjutnya
             v2, action2 = self.min_value(self.result(board, action), alpha, beta)
             if v2 > v:
                 v, move = v2, action
@@ -135,12 +150,17 @@ class TicTacToe():
         return v, move
 
     def min_value(self, board, alpha, beta):
+        """
+        Melakukan perhitungan saat giliran di posisi min untuk AI
+        """
+        # Cek apakah sudah terminal
         if self.terminal(board):
             return self.utility(board), None
         
         v = self.INF_MAX
         move = None
         for action in self.actions(board):
+            # Mengecek value kemenangan v dan langkah selanjutnya
             v2, action2 = self.max_value(self.result(board, action), alpha, beta)
             if v2 < v:
                 v, move = v2, action
