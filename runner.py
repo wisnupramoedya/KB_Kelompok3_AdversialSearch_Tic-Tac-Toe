@@ -94,7 +94,7 @@ while True:
                 user = TicTacToe.O
             elif exitButton.collidepoint(mouse):
                 time.sleep(0.2)
-                pygame.quit()
+                pygame.QUIT
     # tictactoe board
     else:
         # Game board
@@ -202,7 +202,7 @@ while True:
                 mouse = pygame.mouse.get_pos()
                 if exitButton.collidepoint(mouse):
                     time.sleep(0.2)
-                    pygame.Quit()
+                    pygame.QUIT
                     
         else:
             againButton = pygame.Rect(5 * (width / 2), (height / 2), width /  2.5, 50)
