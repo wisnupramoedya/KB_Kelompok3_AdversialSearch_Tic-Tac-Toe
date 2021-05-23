@@ -224,4 +224,3 @@ while True:
                     ai_turn = False
     
     pygame.display.flip()
-
